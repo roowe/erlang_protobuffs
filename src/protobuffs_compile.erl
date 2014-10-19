@@ -597,9 +597,10 @@ collect_full_messages([{message, Name, Fields} | Tail], Collected) ->
     ListName = resolve_list_name(Name, Package),
 
     FieldsOut = lists:foldl(
-          fun ({_,_,_,_,_} = Input, TmpAcc) -> [Input | TmpAcc];
-              (_, TmpAcc) -> TmpAcc
-          end, [], Fields),
+                  fun ({FNum, FName, Type, Opts, _Def}, TmpAcc) ->
+                          [{FNum, FName, lists:last(string:tokens(Type, ".")), Opts, _Def} | TmpAcc];
+                      (_, TmpAcc) -> TmpAcc
+                  end, [], Fields),
 
     Enums = lists:foldl(
           fun ({enum,C,D}, TmpAcc) -> [{enum, [list_to_tuple([C | LN]) || LN <- ListName], D} | TmpAcc];
