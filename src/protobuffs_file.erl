@@ -28,4 +28,15 @@ compile_forms(Forms, Options) ->
     compile:forms(Forms, [return] ++ Options).
 
 write_file(File, Bytes) ->
-    file:write_file(File,Bytes).
+    case file:read_file(File) of
+        {ok, OldContent} ->
+            case iolist_to_binary(Bytes) of
+                OldContent ->
+                    ignore;
+                _ ->
+                    file:write_file(File, Bytes)
+            end;
+        _ ->
+            file:write_file(File, Bytes)
+    end.
+
