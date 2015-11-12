@@ -23,7 +23,6 @@
 %% FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 %% OTHER DEALINGS IN THE SOFTWARE.
 -module(pokemon_pb).
--compile(debug_info).
 -export([encode_pikachu/1, decode_pikachu/1, delimited_decode_pikachu/1]).
 -export([has_extension/2, extension_size/1, get_extension/2,
          set_extension/3]).
